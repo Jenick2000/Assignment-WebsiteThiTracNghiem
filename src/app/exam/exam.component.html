@@ -1,0 +1,122 @@
+<section>
+<div class="container">
+
+    <div class=" row start-exam" *ngIf="start">
+        <div class="col-lg-2"></div>
+        <div class="col-lg-8" style="margin-top: 100px;" >
+            <div class="card">
+                <div class="card-header" style="background-color: greenyellow;padding:25px">
+                  Lập trình Android nâng cao
+                </div>
+                <div class="card-body" style="padding-top: 100px;">
+                    <span style="margin-top:50px">Bạn sẽ không lưu được kết quả làm bài nếu chưa đăng nhập.<span [routerLink]="['/login']"style="cursor: pointer;color: orange">Đăng nhập ngay! </span></span>
+                    <br>
+                    <button class="btn btn-outline-success" (click)="btn_start()" style="    margin-left: 41%;margin-top: 25px;"> Bắt đầu <i class="fa fa-angle-double-right"></i></button>
+                  </div>
+              </div>
+        </div>
+        <div class="col-lg-2"></div>
+    </div>
+
+    <div class="row" *ngIf="exam">
+        <div class="col-lg-10 col-11 body-exam">
+            <div class="content">
+                <h6 class="name-danhmuc"> Danh muc : test IQ</h6>
+               <div class="content-exam">
+                   <h6> co bao nhieu loai dich vu  trong cong ty ?</h6>
+
+                   <div class="form-check">
+                        <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="" >
+                        <label class="form-check-label" for="exampleRadios1">
+                          Van Ty
+                        </label>
+                      </div>
+                      <div class="form-check">
+                        <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2">
+                        <label class="form-check-label" for="exampleRadios2">
+                         Hoang
+                        </label>
+                      </div>
+                      <div class="form-check ">
+                            <input class="form-check-input" type="radio" name="exampleRadios" id="inlineRadio3" value="option3" >
+                            <label class="form-check-label" for="inlineRadio3">Alibaba </label>
+                          </div>
+                          <div class="form-check ">
+                                <input class="form-check-input" type="radio" name="exampleRadios" id="inlineRadio4" value="option3" >
+                                <label class="form-check-label" for="inlineRadio4">Json </label>
+                              </div>
+                      
+               </div>
+               <hr>
+               <div class="next-exam">
+                 <div class="row">
+                   <div class="col-lg-4 col-2"></div>
+                   <div class="col-lg-4 col-8 btn-exam">
+                      <button type="button" class="btn btn-outline-warning" style="margin-left: 25%;margin-right:5%"><i class="fa fa-angle-double-left"></i> pre</button>
+                      <button type="button" class="btn btn-success">next <i class="fa fa-angle-double-right"></i></button>
+    
+                   </div>
+                   <div class="col-lg-4 col-2"></div>
+                 </div>
+                 <hr>
+                 <div class="row">
+                   
+                    <div class="col-lg-3 "></div>
+                    <div class="col-lg-3 "></div> 
+                    <div class="col-lg-6 col-12">
+                      <ul class="list-icon">
+                        <li> <span > <i class="fa fa-check-square-o" style="color: orange"></i> Download</span></li>
+                        <li> <span > <i class="fa fa-edit" style="color: green"></i> Note</span></li>
+                        <li> <span [routerLink]="['/feedback']"> <i class="fa fa-exclamation-circle" style="color: gray"></i> Feedback</span></li>
+                      </ul>
+                    </div>
+                 </div>
+               </div>
+        </div>
+        
+        </div>
+        <!--show so cau da lam va ghi nhan thoi gian lam bai-->
+
+        <div class="show-time" >
+            <div class="row" style="position: sticky;top: 20%;">            
+                <div class="col-lg-12">
+                    <div class="col-lg-12" style="margin-bottom: 10px;">
+                        <div class="card  ">
+                            <div class="card-header" style="background-color: orange">
+                              Time
+                            </div>
+                            <div class="card-body" >
+                                <span style="color: orange" id="box_time"> </span>
+                            </div>
+                          </div>
+                    </div>
+                    <div class="col-lg-12" style="margin-bottom: 10px;">
+                        <div class="card">
+                            <div class="card-header" style="background-color: greenyellow">
+                              Số câu đã làm
+                            </div>
+                            <div class="card-body">
+                                <span style="color: greenyellow"> 5/100</span>
+                            </div>
+                          </div>
+                    </div>
+                    <div class="col-lg-12" >
+                        <div class="card">
+                            <div class="card-header" style="background-color: khaki">
+                             Trả lời đúng
+                            </div>
+                            <div class="card-body">
+                                <span style="color: khaki;" class="socaudung">3</span>
+                            </div>
+                          </div>
+                    </div>
+                </div>
+                
+            </div>
+             
+  
+          </div>
+    </div>
+    
+</div>
+</section>

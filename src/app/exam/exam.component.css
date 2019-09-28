@@ -1,0 +1,78 @@
+.body-exam{
+    height: 550px;
+    background-color: white;
+    margin: 0 auto;
+    margin-top: 50px;
+    margin-bottom: 20px;
+    padding: 50px;
+    /* font-size: 20px; */
+    border-radius: 10%;
+}
+.name-danhmuc{
+    text-align: center;
+    color: orange;
+}
+.content-exam{
+    margin-top: 80px;
+    margin-bottom: 80px;
+}
+.form-check{
+    padding:10px;
+    margin-left: 15px;
+}
+.next-exam{
+    margin: 0 auto;
+}
+.btn-exam{
+    margin: 0 auto;
+}
+.btn-success{
+    background-color: greenyellow;
+    transition: 0.2;
+    color: black;
+    border: none;
+}
+.btn-success:hover{
+    background-color: orange;
+    color: white;
+}
+.list-icon li{
+    display: inline-table;
+    margin-right: 10px;
+    cursor: pointer;
+}
+.list-icon li:hover span{
+    color:orange;
+}
+@media (min-width: 768px) { 
+    .list-icon{
+        margin-left: 100px;
+    }
+    .socaudung{
+        font-size: 22px;
+        margin-left: 40px!important;
+    }
+ }
+ @media (min-width: 568px) { 
+    .show-time{
+        width: 15%;
+        margin-right: -50px;
+    }
+    .card-body span{
+        margin-left: 20px;
+    }
+ }
+ .card-header{
+     text-align: center;
+     padding: 3px;
+ }
+section{
+    
+    background-image: url(https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRslVLMMUyKVk1moRwRF6ZdW7Nyv81fSCj2hx1P0u36bc_9lpILzA);
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    position: relative;
+    z-index: 2;
+    
+}
