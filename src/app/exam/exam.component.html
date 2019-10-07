@@ -1,15 +1,16 @@
+
 <section>
 <div class="container">
-
     <div class=" row start-exam" *ngIf="start">
-        <div class="col-lg-2"></div>
+        <div class="col-lg-2">
+        </div>
         <div class="col-lg-8" style="margin-top: 100px;" >
             <div class="card">
                 <div class="card-header" style="background-color: greenyellow;padding:25px">
-                  Lập trình Android nâng cao
+                  {{nameSubject}}
                 </div>
                 <div class="card-body" style="padding-top: 100px;">
-                    <span style="margin-top:50px">Bạn sẽ không lưu được kết quả làm bài nếu chưa đăng nhập.<span [routerLink]="['/login']"style="cursor: pointer;color: orange">Đăng nhập ngay! </span></span>
+                    <span style="margin-top:50px">Bạn sẽ không lưu được kết quả làm bài nếu chưa đăng nhập.<span [routerLink]="['/signup']"style="cursor: pointer;color: orange">Đăng nhập ngay! </span></span>
                     <br>
                     <button class="btn btn-outline-success" (click)="btn_start()" style="    margin-left: 41%;margin-top: 25px;"> Bắt đầu <i class="fa fa-angle-double-right"></i></button>
                   </div>
@@ -21,30 +22,23 @@
     <div class="row" *ngIf="exam">
         <div class="col-lg-10 col-11 body-exam">
             <div class="content">
-                <h6 class="name-danhmuc"> Danh muc : test IQ</h6>
+                <h6 class="name-danhmuc"> Môn thi : {{nameSubject}}</h6>
                <div class="content-exam">
-                   <h6> co bao nhieu loai dich vu  trong cong ty ?</h6>
-
-                   <div class="form-check">
-                        <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="" >
-                        <label class="form-check-label" for="exampleRadios1">
-                          Van Ty
-                        </label>
-                      </div>
-                      <div class="form-check">
-                        <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2">
-                        <label class="form-check-label" for="exampleRadios2">
-                         Hoang
-                        </label>
-                      </div>
-                      <div class="form-check ">
-                            <input class="form-check-input" type="radio" name="exampleRadios" id="inlineRadio3" value="option3" >
-                            <label class="form-check-label" for="inlineRadio3">Alibaba </label>
-                          </div>
-                          <div class="form-check ">
-                                <input class="form-check-input" type="radio" name="exampleRadios" id="inlineRadio4" value="option3" >
-                                <label class="form-check-label" for="inlineRadio4">Json </label>
-                              </div>
+                
+                    <div *ngFor="let m of subjectService.quizs| paginate: { itemsPerPage: 1, currentPage: p }">
+                        <h6 ><b>Câu hỏi:</b> {{m.Text}}</h6>
+                        <input type="hidden"  id="AnsId" value="{{m.AnswerId}}"  >
+                          <ul>
+                          <li *ngFor="let ans of m.Answers">
+                            <input type="radio" id="{{ans.Id}}" value="{{ans.Id}}" [(ngModel)]="checked" name="{{m.Id}}">
+                            <label for="{{ans.Id}}">{{ans.Text}}</label>
+                            
+                            <div class="check"></div>
+                          </li>
+                          </ul>
+                    </div>
+                    <!--<pagination-controls (pageChange)="p = $event"></pagination-controls>-->
+      
                       
                </div>
                <hr>
@@ -52,28 +46,36 @@
                  <div class="row">
                    <div class="col-lg-4 col-2"></div>
                    <div class="col-lg-4 col-8 btn-exam">
-                      <button type="button" class="btn btn-outline-warning" style="margin-left: 25%;margin-right:5%"><i class="fa fa-angle-double-left"></i> pre</button>
-                      <button type="button" class="btn btn-success">next <i class="fa fa-angle-double-right"></i></button>
+                      <button type="button" class="btn btn-outline-warning"(click)="goiy()" style="margin-left: 25%;margin-right:5%">Gợi ý </button>
+                      <button type="button" id="btn_check" class="btn btn-success" (click)="AnsNext()">next <i class="fa fa-angle-double-right"></i></button>
     
                    </div>
                    <div class="col-lg-4 col-2"></div>
                  </div>
                  <hr>
-                 <div class="row">
+                 <div class="row" style="min-height: 80px">
                    
                     <div class="col-lg-3 "></div>
                     <div class="col-lg-3 "></div> 
                     <div class="col-lg-6 col-12">
-                      <ul class="list-icon">
-                        <li> <span > <i class="fa fa-check-square-o" style="color: orange"></i> Download</span></li>
-                        <li> <span > <i class="fa fa-edit" style="color: green"></i> Note</span></li>
-                        <li> <span [routerLink]="['/feedback']"> <i class="fa fa-exclamation-circle" style="color: gray"></i> Feedback</span></li>
-                      </ul>
+                      <div class="list-icon">
+                         <span > <i class="fa fa-check-square-o" style="color: orange"></i> Download</span>
+                         <span > <i class="fa fa-edit" style="color: green"></i> Note</span>
+                        <span [routerLink]="['/feedback']"> <i class="fa fa-exclamation-circle" style="color: gray"></i> Feedback</span>
+                      </div>
                     </div>
                  </div>
                </div>
         </div>
-        
+           <!--hien thi hinh mat cuoi dung hoac sai-->
+        <div class="hinh_da_an" *ngIf="TraLoiDung">
+          <img src="https://znews-photo.zadn.vn/w480/Uploaded/neg_rtlzofn/2015_08_17/zing_dapan.jpg">
+          <span style="color: green" class="correct"><b>CORRECT</b></span>
+        </div>
+        <div class="hinh_da_an_sai" *ngIf="TraLoiSai">
+          <img src="https://image.shutterstock.com/image-vector/disappointed-emoticon-showing-paper-f-260nw-352272452.jpg">
+          <span style="color: red" class="faild"><b>INCORRECT</b></span>
+        </div>
         </div>
         <!--show so cau da lam va ghi nhan thoi gian lam bai-->
 
@@ -96,7 +98,7 @@
                               Số câu đã làm
                             </div>
                             <div class="card-body">
-                                <span style="color: greenyellow"> 5/100</span>
+                                <span style="color: greenyellow"> {{socaudalam}}/{{subjectService.quizs.length}}</span>
                             </div>
                           </div>
                     </div>
@@ -106,7 +108,7 @@
                              Trả lời đúng
                             </div>
                             <div class="card-body">
-                                <span style="color: khaki;" class="socaudung">3</span>
+                                <span style="color: khaki;" class="socaudung">{{socaudung}}</span>
                             </div>
                           </div>
                     </div>
@@ -119,4 +121,5 @@
     </div>
     
 </div>
+
 </section>

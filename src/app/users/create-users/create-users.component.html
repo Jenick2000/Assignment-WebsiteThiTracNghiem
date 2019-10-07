@@ -1,0 +1,116 @@
+
+<div *ngIf="userService.loggedIn">
+    <img src="{{ userService.user.photoUrl }}">
+  <div>
+    <h4>{{ userService.user.name }}</h4>
+    <p>{{ userService.user.email }}</p>
+  </div>
+  </div>
+
+
+<div id="logreg-forms" [hidden]="submitted">
+  <form class="form-signin">
+      <h1 class="h3 mb-3 font-weight-normal" style="text-align: center"> Sign in</h1>
+      <div class="social-login">
+          <button class="btn facebook-btn social-btn" type="button" (click)="userService.signInWithFB()"><span><i class="fa fa-facebook"></i> Sign in with Facebook</span> </button>
+          <button class="btn google-btn social-btn" type="button" (click)="userService.signInWithGoogle()"><span><i class="fa fa-google"></i> Sign in with Google+</span> </button>
+      </div>
+      <p style="text-align:center"> OR </p>
+      <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required="" autofocus="">
+      <input type="password" id="inputPassword" class="form-control" placeholder="Password" required="">
+
+      <button class="btn btn-success btn-block" type="submit"><i class="fa fa-sign-in"></i> Sign in</button>
+      <a href="#" id="forgot_pswd">Forgot password?</a>
+      <hr>
+      <!-- <p>Don't have an account!</p>  -->
+      <button class="btn btn-primary btn-block" type="button" id="btn-signup"><i class="fa fa-user-plus"></i> Sign up New Account</button>
+  </form>
+
+  <form action="/reset/password/" class="form-reset">
+      <input type="email" id="resetEmail" class="form-control" placeholder="Email address" required="" autofocus="">
+      <button class="btn btn-primary btn-block" type="submit">Reset Password</button>
+      <a href="#" id="cancel_reset"><i class="fa  fa-step-backward"></i> Back</a>
+  </form>
+
+  <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="form-signup">
+      <div class="social-login">
+          <button class="btn facebook-btn social-btn" type="button"><span><i class="fa fa-facebook"></i> Sign up with Facebook</span> </button>
+      </div>
+      <div class="social-login">
+          <button class="btn google-btn social-btn" type="button"><span><i class="fa fa-google"></i> Sign up with Google+</span> </button>
+      </div>
+
+      <p style="text-align:center">OR</p>
+
+      <input type="text" required minlength="4" class="form-control" formControlName="fullname" placeholder="Full Name" >
+      <div *ngIf="f.fullname.invalid && (f.fullname.dirty || f.fullname.touched)" style="color:red">
+
+          <div *ngIf="f.fullname.errors.required">
+              <sup>*</sup> Họ tên cần được nhập !
+          </div>
+          <div *ngIf="f.fullname.errors.minlength">
+              <sup>*</sup> Name must be at least 4 characters long.
+          </div>
+      </div>
+      <input type="email" class="form-control" formControlName="email" placeholder="Email address" required autofocus="" >
+      <div *ngIf="f.email.invalid && (f.email.dirty || f.email.touched)" style="color:red">
+
+        <div *ngIf="f.email.errors.required">
+            <sup>*</sup> please enter email !
+        </div>
+        <div *ngIf="f.email.errors.email">
+          <sup>*</sup> email not right!.
+      </div>
+    </div>
+      <input type="password" class="form-control"formControlName="password" minlength="6" placeholder="Password" required >
+      <div *ngIf="f.password.invalid && (f.password.dirty || f.password.touched)" style="color:red">
+
+        <div *ngIf="f.password.errors.required">
+            <sup>*</sup> please enter password !
+        </div>
+        <div *ngIf="f.password.errors.minlength">
+            <sup>*</sup> Name must be at least 6 characters long.
+        </div>
+    </div>
+      <input type="password" class="form-control"formControlName="confirmPassword" placeholder="Repeat Password" required autofocus="">
+      <div *ngIf="f.confirmPassword.invalid && (f.confirmPassword.dirty || f.confirmPassword.touched)" style="color:red">
+
+        <div *ngIf="f.confirmPassword.errors.required">
+            <sup>*</sup> please enter confirm password !
+        </div>
+        <div *ngIf="f.confirmPassword.errors.mustMatch">
+            <sup>*</sup> confirm password incorrect.
+        </div>
+    </div>
+      <button class="btn btn-primary btn-block" type="submit"><i class="fa fa-sign-in"></i> Sign Up</button>
+      <a href="#" id="cancel_signup" style="display:contents"><i class="fa fa-step-backward"></i> Back</a>
+      <span style="cursor: pointer;margin-left:25px;color:lightseagreen" (click)="resetForm()">Reset</span>
+  </form>
+  <br>
+
+</div>
+<div [hidden]="!submitted" style="margin-top: 100px;text-align: center">
+  <h4>Đăng ký thành công... </h4>
+  <button class="btn btn-success" (click)="newUser()">Back</button>
+</div>
+<p style="text-align:center">
+  <a href="http://bit.ly/2RjWFMfunction toggleResetPswd(e){
+e.preventDefault();
+$('#logreg-forms .form-signin').toggle() // display:block or none
+$('#logreg-forms .form-reset').toggle() // display:block or none
+}
+
+function toggleSignUp(e){
+e.preventDefault();
+$('#logreg-forms .form-signin').toggle(); // display:block or none
+$('#logreg-forms .form-signup').toggle(); // display:block or none
+}
+
+$(()=>{
+// Login Register Form
+$('#logreg-forms #forgot_pswd').click(toggleResetPswd);
+$('#logreg-forms #cancel_reset').click(toggleResetPswd);
+$('#logreg-forms #btn-signup').click(toggleSignUp);
+$('#logreg-forms #cancel_signup').click(toggleSignUp);
+})g" target="_blank" style="color:black"></a>
+</p>
