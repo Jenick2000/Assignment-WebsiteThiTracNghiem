@@ -1,0 +1,69 @@
+
+<div class="container" *ngIf="inforUser; else login">
+        <div class="center" style="margin: 50px 0">
+            <h3 style="color: orange">Update Account</h3>
+        </div>
+        <form [formGroup]="updateForm" (ngSubmit)="onSubmit()">
+            <div class="form-group">
+                <label for="exampleInputEmail1">Full Name</label>
+                <input type="text" required minlength="4" class="form-control" formControlName="fullname"  class="form-control" placeholder="Full name"  autofocus="">
+                <div *ngIf="f.fullname.invalid && (f.fullname.dirty || f.fullname.touched)" style="color:red">
+
+                    <div *ngIf="f.fullname.errors.required">
+                        <sup>*</sup> Họ tên cần được nhập !
+                    </div>
+                    <div *ngIf="f.fullname.errors.minlength">
+                        <sup>*</sup> Name must be at least 4 characters long.
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-group">
+              <label for="exampleInputEmail1">Email address</label>
+              <input type="email"formControlName="email" class="form-control" required aria-describedby="emailHelp" placeholder="Enter email">
+              <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+              <div *ngIf="f.email.invalid && (f.email.dirty || f.email.touched)" style="color:red">
+
+                  <div *ngIf="f.email.errors.required">
+                      <sup>*</sup> please enter email !
+                  </div>
+                  <div *ngIf="f.email.errors.email">
+                    <sup>*</sup> email not right!.
+                </div>
+                </div>
+            </div>
+            <div class="form-group">
+              <label for="exampleInputPassword1">Password</label>
+              <input type="password" class="form-control" formControlName="password" minlength="6" required placeholder="Password">
+              <div *ngIf="f.password.invalid && (f.password.dirty || f.password.touched)" style="color:red">
+
+                  <div *ngIf="f.password.errors.required">
+                      <sup>*</sup> please enter password !
+                  </div>
+                  <div *ngIf="f.password.errors.minlength">
+                      <sup>*</sup> Name must be at least 6 characters long.
+                  </div>
+                </div>
+            </div>
+            <div class="form-group">
+                    <label for="exampleInputEmail1">repeat password</label>
+                    <input type="password"formControlName="confirmPassword" required class="form-control" placeholder="Repeat Password" required autofocus="">
+                    <div *ngIf="f.confirmPassword.invalid && (f.confirmPassword.dirty || f.confirmPassword.touched)" style="color:red">
+
+                        <div *ngIf="f.confirmPassword.errors.required">
+                            <sup>*</sup> please enter confirm password !
+                        </div>
+                        <div *ngIf="f.confirmPassword.errors.mustMatch">
+                            <sup>*</sup> confirm password incorrect.
+                        </div>
+                      </div>
+                </div>
+            <button type="submit" class="btn btn-primary">Update</button>
+          </form>
+    </div>
+<ng-template #login>
+    <div class="container" style="text-align: center">
+        <h3> You need Login! </h3>
+        <button class="btn btn-primary" [routerLink]="['/signup']">Login</button>
+    </div>
+</ng-template>  

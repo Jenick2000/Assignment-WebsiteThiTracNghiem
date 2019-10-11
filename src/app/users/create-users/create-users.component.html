@@ -9,26 +9,67 @@
 
 
 <div id="logreg-forms" [hidden]="submitted">
-  <form class="form-signin">
+  <form class="form-signin" [formGroup]="loginForm" (ngSubmit)="onLogin()">
       <h1 class="h3 mb-3 font-weight-normal" style="text-align: center"> Sign in</h1>
       <div class="social-login">
           <button class="btn facebook-btn social-btn" type="button" (click)="userService.signInWithFB()"><span><i class="fa fa-facebook"></i> Sign in with Facebook</span> </button>
           <button class="btn google-btn social-btn" type="button" (click)="userService.signInWithGoogle()"><span><i class="fa fa-google"></i> Sign in with Google+</span> </button>
       </div>
       <p style="text-align:center"> OR </p>
-      <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required="" autofocus="">
-      <input type="password" id="inputPassword" class="form-control" placeholder="Password" required="">
+      <input type="email" id="inputEmail" class="form-control" formControlName="emailLogin" placeholder="Email address" required="" autofocus="">
+      <div *ngIf="loginF.emailLogin.invalid && (loginF.emailLogin.dirty || loginF.emailLogin.touched)" style="color:red">
 
-      <button class="btn btn-success btn-block" type="submit"><i class="fa fa-sign-in"></i> Sign in</button>
+        <div *ngIf="loginF.emailLogin.errors.required">
+            <sup>*</sup> please enter email !
+        </div>
+        <div *ngIf="loginF.emailLogin.errors.email">
+          <sup>*</sup> email not right!.
+      </div>
+      </div>
+      <input type="password" id="inputPassword" formControlName="passwordLogin" class="form-control" placeholder="Password" required="">
+      <div *ngIf="loginF.passwordLogin.invalid && (loginF.passwordLogin.dirty || loginF.passwordLogin.touched)" style="color:red">
+
+        <div *ngIf="loginF.passwordLogin.errors.required">
+            <sup>*</sup> please enter password !
+        </div>
+        <div *ngIf="loginF.passwordLogin.errors.minlength">
+            <sup>*</sup> Password must be at least 6 characters long.
+        </div>
+      </div>
+      <button class="btn btn-success btn-block" type="submit" id="btn_login">
+          <div class="spinner-border text-light" role="status" *ngIf="loadingLogin; else btnlogin">
+              <span class="sr-only">Loading...</span>
+            </div>
+            <ng-template #btnlogin>
+                <i class="fa fa-sign-in"></i> Sign in
+            </ng-template>
+        
+      </button>
       <a href="#" id="forgot_pswd">Forgot password?</a>
       <hr>
       <!-- <p>Don't have an account!</p>  -->
       <button class="btn btn-primary btn-block" type="button" id="btn-signup"><i class="fa fa-user-plus"></i> Sign up New Account</button>
   </form>
 
-  <form action="/reset/password/" class="form-reset">
-      <input type="email" id="resetEmail" class="form-control" placeholder="Email address" required="" autofocus="">
-      <button class="btn btn-primary btn-block" type="submit">Reset Password</button>
+  <form [formGroup]="resetPasswordForm" (ngSubmit)="onResetPassword()"class="form-reset">
+      <input type="email" required formControlName="email" class="form-control" placeholder="Email address" required="" autofocus="">
+      <div *ngIf="resetF.email.invalid && (resetF.email.dirty || resetF.email.touched)" style="color:red">
+
+        <div *ngIf="resetF.email.errors.required">
+            <sup>*</sup> please enter email !
+        </div>
+        <div *ngIf="resetF.email.errors.email">
+          <sup>*</sup> email not right!.
+      </div>
+      </div>
+      <button class="btn btn-primary btn-block" type="submit">
+          <div class="spinner-border text-light" role="status" *ngIf="loadingReset; else btnReset">
+              <span class="sr-only">Loading...</span>
+            </div>
+            <ng-template #btnReset>
+                <i class="fa fa-sign-in"></i>  Reset Password
+            </ng-template>
+       </button>
       <a href="#" id="cancel_reset"><i class="fa  fa-step-backward"></i> Back</a>
   </form>
 
@@ -61,7 +102,7 @@
         <div *ngIf="f.email.errors.email">
           <sup>*</sup> email not right!.
       </div>
-    </div>
+      </div>
       <input type="password" class="form-control"formControlName="password" minlength="6" placeholder="Password" required >
       <div *ngIf="f.password.invalid && (f.password.dirty || f.password.touched)" style="color:red">
 
@@ -71,7 +112,7 @@
         <div *ngIf="f.password.errors.minlength">
             <sup>*</sup> Name must be at least 6 characters long.
         </div>
-    </div>
+      </div>
       <input type="password" class="form-control"formControlName="confirmPassword" placeholder="Repeat Password" required autofocus="">
       <div *ngIf="f.confirmPassword.invalid && (f.confirmPassword.dirty || f.confirmPassword.touched)" style="color:red">
 
@@ -114,3 +155,7 @@ $('#logreg-forms #btn-signup').click(toggleSignUp);
 $('#logreg-forms #cancel_signup').click(toggleSignUp);
 })g" target="_blank" style="color:black"></a>
 </p>
+<!--thong bao -->
+<div class="alert alert-success" role="alert" *ngIf="isAlert">
+    <span id="isAlert">Login succecc...</span>
+  </div>

@@ -1,7 +1,7 @@
 
 <section>
 <div class="container">
-    <div class=" row start-exam" *ngIf="start">
+    <div class=" row start-exam" *ngIf="!start_exam; else exam">
         <div class="col-lg-2">
         </div>
         <div class="col-lg-8" style="margin-top: 100px;" >
@@ -18,7 +18,7 @@
         </div>
         <div class="col-lg-2"></div>
     </div>
-
+    <ng-template #exam>
     <div class="row" *ngIf="exam">
         <div class="col-lg-10 col-11 body-exam">
             <div class="content">
@@ -28,6 +28,7 @@
                     <div *ngFor="let m of subjectService.quizs| paginate: { itemsPerPage: 1, currentPage: p }">
                         <h6 ><b>Câu hỏi:</b> {{m.Text}}</h6>
                         <input type="hidden"  id="AnsId" value="{{m.AnswerId}}"  >
+                        <input type="hidden"  id="MarksAns" value="{{m.Marks}}"  >
                           <ul>
                           <li *ngFor="let ans of m.Answers">
                             <input type="radio" id="{{ans.Id}}" value="{{ans.Id}}" [(ngModel)]="checked" name="{{m.Id}}">
@@ -50,7 +51,19 @@
                       <button type="button" id="btn_check" class="btn btn-success" (click)="AnsNext()">next <i class="fa fa-angle-double-right"></i></button>
     
                    </div>
-                   <div class="col-lg-4 col-2"></div>
+                   <div class="col-lg-4 col-2" >
+                     <div *ngIf="loggedIn">
+                      <button class="btn btn-outline-success"style="float: right" id="btn_nopbai" (click)="nopBai()">
+                          <div class="spinner-border text-success" role="status" *ngIf="loadingNopBai; else btnnopbai">
+                              <span class="sr-only">Loading...</span>
+                            </div>
+                            <ng-template #btnnopbai >
+                                Nộp Bài
+                            </ng-template>
+                        
+                      </button>
+                      </div>
+                   </div>
                  </div>
                  <hr>
                  <div class="row" style="min-height: 80px">
@@ -119,7 +132,7 @@
   
           </div>
     </div>
-    
+  </ng-template>
 </div>
 
 </section>

@@ -8,7 +8,13 @@ declare var $:any;
 })
 export class AppComponent {
   title = 'WebsiteThiTracNghiem';
-  constructor(private userService :UsersService){}
+   loggedIn:boolean;
+  constructor(public userService :UsersService){
+    this.loggedIn = (this.userService.currentUserValue != null);
+  }
+  logout(){
+    this.userService.logout();
+  }
   top(){
       var body = $("html, body");
       body.stop().animate({scrollTop:0}, 500, 'swing', function() { });              

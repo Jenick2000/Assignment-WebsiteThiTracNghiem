@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import * as quizs from '../../assets/quizs/exam.json';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AngularFireDatabase } from '@angular/fire/database';
 import { Observable } from 'rxjs';
 import { SubjectService } from '../share/subject.service';
+import{UsersService} from '../users/users.service';
 declare var $:any;
 @Component({
   selector: 'app-exam',
@@ -19,17 +19,23 @@ export class ExamComponent implements OnInit {
     socaudung=0;
     TraLoiDung:boolean=false;
     TraLoiSai:boolean=false;
-    start:boolean=true;
-    exam:boolean=false;
     checked=null;
     AnsId=null;
+    TotalMarks :number= 0;
     subject: Observable<any[]>;
     quiz :Observable<any[]>;
     count=0;
     getNameSubject:any;
     nameSubject=null;
-  constructor(private route:ActivatedRoute, db: AngularFireDatabase, private subjectService :SubjectService) {  
+    loadingNopBai:boolean=false;
+    loggedIn :boolean;
+    start_exam :boolean ;
+    keyUser:any; 
+  constructor(private router: Router,private userService : UsersService,private route:ActivatedRoute, db: AngularFireDatabase, public subjectService :SubjectService) {  
     this.route.paramMap.subscribe(pramas=>{this.id=pramas.get('subjectId')});
+    this.loggedIn = (localStorage.getItem('usercurrent') != null);//kiem tra user da dang nhap chua!
+    this.start_exam =this.loggedIn;
+    this.keyUser=this.userService.currentUserValue;
     this.subject = this.subjectService.getSubject();
     if(this.subject==null){
       this.subjectService.quizs=[];
@@ -51,6 +57,7 @@ export class ExamComponent implements OnInit {
   ngOnInit() { 
     this.getId(this.id);
     this.getdata();
+   
     setTimeout(()=>{
       if(this.subject==null){
         this.nameSubject = "Not Found data";
@@ -90,10 +97,9 @@ export class ExamComponent implements OnInit {
       });
   }//end ngOnit
 
-  //start exam
+  //start exam ko can login
   btn_start(){
-    this.start=false;
-    this.exam=true;
+       this.start_exam=true;
      }
 
   
@@ -103,10 +109,11 @@ export class ExamComponent implements OnInit {
     $(window).scrollTop(100);
     this.socaudalam++;
     let IDdapdan =$('#AnsId').val();
+    let marksAns = $('#MarksAns').val();
     if(this.checked==IDdapdan){
         this.TraLoiDung=true;
         this.socaudung++;
-        
+        this.TotalMarks+= Number(marksAns);
         setTimeout(()=>{
             this.TraLoiDung=false;
             $('#btn_check').attr("disabled", false);
@@ -118,12 +125,26 @@ export class ExamComponent implements OnInit {
         this.TraLoiSai=false;
         $('#btn_check').attr("disabled", false);
         if(this.p <this.subjectService.quizs.length){this.p++;}              
-    },5000)
+    },2000)
     }
    
    }
   goiy(){
     alert("Tự mà làm. đéo có gợi ý đâu!");
+  }
+  nopBai(){
+    $('#btn_nopbai').attr("disabled", true);
+    
+   let conf = confirm("Bạn có chắc chắn là muốn nộp bài!");
+   if(conf===true){
+    this.loadingNopBai = true;
+    this.userService.updateUser(this.keyUser.key,{Mark:this.TotalMarks})
+    setTimeout(() => {
+      $('#btn_nopbai').attr("disabled", false);
+      this.loadingNopBai = false; 
+      this.router.navigate(['/account']);
+    }, 4000) 
+   }else{ $('#btn_nopbai').attr("disabled", false);}
   }
   
   isLastPage(){

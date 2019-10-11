@@ -47,15 +47,15 @@
                     <a class="nav-link" [routerLink]="['']">
                        subject list <span class="sr-only">(current)</span></a>
                 </li>
-                <li class="nav-item dropdown">
+                <li class="nav-item dropdown" *ngIf="loggedIn">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Account
+                        <i class='fa fa-pied-piper-alt' style="margin-left: 5px"></i>{{userService.currentUserValue.FullName}}
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <a class="dropdown-item" [routerLink]="['/signup']">Login</a>
-                        <a class="dropdown-item" href="#">Register</a>
+                        <a class="dropdown-item" [routerLink]="['/signup']">Register</a>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" [routerLink]="['/editaccount']">Edit Account</a>
+                        <a class="dropdown-item" [routerLink]="['/editUser']">Edit Account</a>
                     </div>
                 </li>
                 <li class="nav-item">
@@ -67,17 +67,18 @@
                 <li class="nav-item">
                     <a class="nav-link" [routerLink]="['/feedback']">Feedback</a>
                 </li>
-                <div *ngIf="!userService.loggedIn">
+    
+                <div *ngIf="!loggedIn">
                     <button class="col btn btn-orange-moon btn-rounded" [routerLink]="['/signup']">Sign In</button>
                     
                 </div>
-                <div *ngIf="userService.loggedIn">
+                <div *ngIf="loggedIn">
                         <div class="dropdown">
-                                <img src="{{userService.user.photoUrl}}" style="width: 30px;border-radius: 50%; cursor: pointer;" class="dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">    
+                                <img src="assets/images/best.png" style="width: 38px;height:35px;border-radius: 50%; cursor: pointer;" class="dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">    
                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="left: -150px;top:45px;">
-                                  <a class="dropdown-item" href="#">Action</a>
-                                  <a class="dropdown-item" href="#">Another action</a>
-                                  <a class="dropdown-item" style="cursor: pointer" (click)="userService.signOut()">LogOut</a>
+                                  <a class="dropdown-item" [routerLink]="['/account']"><i class='fa fa-pied-piper-alt' style="margin-left: 5px"></i>{{userService.currentUserValue.FullName}}</a>
+                                  <a class="dropdown-item" [routerLink]="['/editUser']">Edit account</a>
+                                  <a class="dropdown-item" style="cursor: pointer" (click)="logout()">LogOut</a>
                                 </div>
                               </div>
                      

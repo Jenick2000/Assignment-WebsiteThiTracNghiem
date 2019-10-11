@@ -14,15 +14,13 @@ import { HomeComponent } from './home/home.component';
 import { ContactComponent } from './contact/contact.component';
 import { AboutComponent } from './about/about.component';
 import { FeedbackComponent } from './feedback/feedback.component';
-import { EditAccoountComponent } from './edit-account/edit-accoount.component';
 import { ExamComponent } from './exam/exam.component';
-import { TestFirebaseComponent } from './test-firebase/test-firebase.component';
-import { UsersListComponent } from './users/users-list/users-list.component';
 import { CreateUsersComponent } from './users/create-users/create-users.component';
 import { UserDetailsComponent} from './users/user-details/user-details.component';
 // import social login
 import { SocialLoginModule, AuthServiceConfig } from "angularx-social-login";
 import { GoogleLoginProvider, FacebookLoginProvider } from "angularx-social-login";
+import { EditUserComponent } from './users/edit-user/edit-user.component';
  
 let config = new AuthServiceConfig([
   {
@@ -45,19 +43,17 @@ export function provideConfig() {
     ContactComponent,
     AboutComponent,
     FeedbackComponent,
-    EditAccoountComponent,
     ExamComponent,
-    TestFirebaseComponent,
-    UsersListComponent,
     CreateUsersComponent,
-    UserDetailsComponent
+    UserDetailsComponent,
+    EditUserComponent
   ],
   imports: [
     BrowserModule,
     NgxPaginationModule,
     FormsModule,
     ReactiveFormsModule ,
-    AngularFireModule.initializeApp(environment.firebaseConfig, 'my-app-name'),
+    AngularFireModule.initializeApp(environment.firebaseConfig, 'my-app-name'), 
     AngularFireDatabaseModule,
     AngularFireAuthModule ,
     SocialLoginModule,
@@ -67,10 +63,9 @@ export function provideConfig() {
       {path: 'about', component:AboutComponent},
       {path: 'feedback', component:FeedbackComponent},
       {path: 'signup', component:CreateUsersComponent},
-      {path: 'editaccount', component:EditAccoountComponent},
       { path: 'exam/:subjectId', component: ExamComponent },
-      { path: 'testfirebase', component: TestFirebaseComponent },
-      {path : 'detailuser',component:UsersListComponent},
+      {path : 'account',component:UserDetailsComponent},
+      {path : 'editUser', component: EditUserComponent},
       { path: '**', redirectTo: '', pathMatch: 'full' },
      
      ]) 

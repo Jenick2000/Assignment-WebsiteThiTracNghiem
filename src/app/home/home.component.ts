@@ -28,9 +28,9 @@ export class HomeComponent implements OnInit {
     setTimeout(()=>{
       this.Page=Math.ceil(this.data.length/6);
       for(let i=0;i<this.Page;i++){
-         this.PageArray[i]=i+1;
-      }
-    },3000)
+        this.PageArray[i]=i+1;
+     }  
+    },6000)
  
   }
   
