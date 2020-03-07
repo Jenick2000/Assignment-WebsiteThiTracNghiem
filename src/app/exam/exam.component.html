@@ -24,32 +24,34 @@
             <div class="content">
                 <h6 class="name-danhmuc"> Môn thi : {{nameSubject}}</h6>
                <div class="content-exam">
-                
+
                     <div *ngFor="let m of subjectService.quizs| paginate: { itemsPerPage: 1, currentPage: p }">
                         <h6 ><b>Câu hỏi:</b> {{m.Text}}</h6>
                         <input type="hidden"  id="AnsId" value="{{m.AnswerId}}"  >
                         <input type="hidden"  id="MarksAns" value="{{m.Marks}}"  >
                           <ul>
                           <li *ngFor="let ans of m.Answers">
-                            <input type="radio" id="{{ans.Id}}" value="{{ans.Id}}" [(ngModel)]="checked" name="{{m.Id}}">
+                            <input type="radio" id="{{ans.Id}}" value="{{ans.Id}}" [(ngModel)]="checked" name="radio">
                             <label for="{{ans.Id}}">{{ans.Text}}</label>
-                            
+
                             <div class="check"></div>
                           </li>
                           </ul>
+
                     </div>
+                    <input type="hidden" id="input_hidden_field" name="answers" value="">
                     <!--<pagination-controls (pageChange)="p = $event"></pagination-controls>-->
-      
-                      
+
+
                </div>
                <hr>
-               <div class="next-exam">
+               <div class="next-exam" *ngIf="subjectService.quizs; else notData">
                  <div class="row">
                    <div class="col-lg-4 col-2"></div>
                    <div class="col-lg-4 col-8 btn-exam">
                       <button type="button" class="btn btn-outline-warning"(click)="goiy()" style="margin-left: 25%;margin-right:5%">Gợi ý </button>
                       <button type="button" id="btn_check" class="btn btn-success" (click)="AnsNext()">next <i class="fa fa-angle-double-right"></i></button>
-    
+
                    </div>
                    <div class="col-lg-4 col-2" >
                      <div *ngIf="loggedIn">
@@ -60,16 +62,16 @@
                             <ng-template #btnnopbai >
                                 Nộp Bài
                             </ng-template>
-                        
+
                       </button>
                       </div>
                    </div>
                  </div>
                  <hr>
                  <div class="row" style="min-height: 80px">
-                   
+
                     <div class="col-lg-3 "></div>
-                    <div class="col-lg-3 "></div> 
+                    <div class="col-lg-3 "></div>
                     <div class="col-lg-6 col-12">
                       <div class="list-icon">
                          <span > <i class="fa fa-check-square-o" style="color: orange"></i> Download</span>
@@ -79,6 +81,11 @@
                     </div>
                  </div>
                </div>
+               <ng-template #notData>
+                 <div>
+               <span style="text-align: center;"> Not found data</span>
+                 </div>
+               </ng-template>
         </div>
            <!--hien thi hinh mat cuoi dung hoac sai-->
         <div class="hinh_da_an" *ngIf="TraLoiDung">
@@ -93,7 +100,7 @@
         <!--show so cau da lam va ghi nhan thoi gian lam bai-->
 
         <div class="show-time" >
-            <div class="row" style="position: sticky;top: 20%;">            
+            <div class="row" style="position: sticky;top: 20%;">
                 <div class="col-lg-12">
                     <div class="col-lg-12" style="margin-bottom: 10px;">
                         <div class="card  ">
@@ -111,7 +118,10 @@
                               Số câu đã làm
                             </div>
                             <div class="card-body">
-                                <span style="color: greenyellow"> {{socaudalam}}/{{subjectService.quizs.length}}</span>
+                                <span style="color: greenyellow" *ngIf="subjectService.quizs; else chualam"> {{socaudalam}}/{{subjectService.quizs.length}}</span>
+                                <ng-template #chualam>
+                                  <span style="color: greenyellow" > 0/0</span>
+                                </ng-template>
                             </div>
                           </div>
                     </div>
@@ -126,13 +136,16 @@
                           </div>
                     </div>
                 </div>
-                
+
             </div>
-             
-  
+
+
           </div>
     </div>
   </ng-template>
 </div>
 
 </section>
+  <script>
+
+  </script>
